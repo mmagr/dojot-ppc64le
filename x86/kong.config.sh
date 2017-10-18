@@ -157,7 +157,7 @@ authConfig "history"
     "name": "httpDevices",
     "uris": "/iot",
     "strip_uri": false,
-    "upstream_url": "${target}:8080"
+    "upstream_url": "http://iotagent:8080"
 }
 PAYLOAD
 # no auth: used for middleware <-> device communication via HTTP(s)

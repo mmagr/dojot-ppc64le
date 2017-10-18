@@ -25,23 +25,23 @@ services:
     ports:
       - "1883:1883"
 
-  iotagent:
-    image: powerbr/iotagent-json:1.0
-    restart: always
-    depends_on:
-      - mqtt
-    volumes:
-      - ./iotagent/config.js:/opt/iotajson/config.js:Z
-    ports:
-      - "4041:4041"
-      - "8080:8080"
-    extra_hosts:
-      - "mongodb:10.4.1.49"
-      - "orion:10.4.1.49"
-    networks:
-      default:
-        aliases:
-          - idas
+  # iotagent:
+  #   image: powerbr/iotagent-json:1.0
+  #   restart: always
+  #   depends_on:
+  #     - mqtt
+  #   volumes:
+  #     - ./iotagent/config.js:/opt/iotajson/config.js:Z
+  #   ports:
+  #     - "4041:4041"
+  #     - "8080:8080"
+  #   extra_hosts:
+  #     - "mongodb:10.4.1.49"
+  #     - "orion:10.4.1.49"
+  #   networks:
+  #     default:
+  #       aliases:
+  #         - idas
 
   # coap:
   #   image: "powerbr/lightweightm2m-iotagent"
@@ -75,6 +75,7 @@ services:
     extra_hosts:
       - "mongodb:10.4.1.49"
       - "orion:10.4.1.49"
+      - "iotagent:10.4.1.49"
     networks:
       default:
         aliases:
@@ -127,21 +128,23 @@ services:
   perseo-core:
     image: powerbr/perseo-core
     restart: always
-    command: -perseo_fe_url perseo-fe:9090
-
-  perseo-fe:
-    image: powerbr/perseo-fe
-    restart: always
+    command: -perseo_fe_url 10.4.1.49:9090
     ports:
-      - "9090:9090"
-    depends_on:
-      - perseo-core
-    extra_hosts:
-      - "orion:10.4.1.49"
-    environment:
-      - PERSEO_MONGO_HOST=10.4.1.49
-      - PERSEO_CORE_URL=http://perseo-core:8080
-      - PERSEO_ORION_URL=http://orion:1026/NGSI10/updateContext
+      - "8080:8080"
+
+  # perseo-fe:
+  #   image: powerbr/perseo-fe
+  #   restart: always
+  #   ports:
+  #     - "9090:9090"
+  #   depends_on:
+  #     - perseo-core
+  #   extra_hosts:
+  #     - "orion:10.4.1.49"
+  #   environment:
+  #     - PERSEO_MONGO_HOST=10.4.1.49
+  #     - PERSEO_CORE_URL=http://perseo-core:8080
+  #     - PERSEO_ORION_URL=http://orion:1026/NGSI10/updateContext
 
   mashup:
     image: powerbr/mashup
