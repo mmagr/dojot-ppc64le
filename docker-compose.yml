@@ -19,11 +19,11 @@ services:
   #   image: "ppc64le/mongodb:2.6.10"
   #   restart: always
 
-  mqtt:
-    image: powerbr/mosquitto:1.0
-    restart: always
-    ports:
-      - "1883:1883"
+  # mqtt:
+  #   image: powerbr/mosquitto:1.0
+  #   restart: always
+  #   ports:
+  #     - "1883:1883"
 
   # iotagent:
   #   image: powerbr/iotagent-json:1.0
